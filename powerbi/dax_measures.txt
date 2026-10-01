@@ -1,0 +1,18 @@
+Create these measures in Power BI after importing cleaned_sales_dataset_sql.csv.
+Assumed table name: clean_sales_dataset_sql
+
+Total Revenue = SUM(clean_sales_dataset_sql[Total_Sales])
+
+Transactions = COUNTROWS(clean_sales_dataset_sql)
+
+Unique Customers = DISTINCTCOUNT(clean_sales_dataset_sql[Customer_ID])
+
+Average Order Value = DIVIDE([Total Revenue], [Transactions])
+
+Units Sold = SUM(clean_sales_dataset_sql[Quantity])
+
+Create these as calculated columns, not measures:
+
+Customer Revenue = CALCULATE(SUM(clean_sales_dataset_sql[Total_Sales]), ALLEXCEPT(clean_sales_dataset_sql, clean_sales_dataset_sql[Customer_ID]))
+
+Customer Segment = SWITCH(TRUE(), clean_sales_dataset_sql[Customer Revenue] >= 250000, "High Value", clean_sales_dataset_sql[Customer Revenue] >= 100000, "Medium Value", "Low Value")
